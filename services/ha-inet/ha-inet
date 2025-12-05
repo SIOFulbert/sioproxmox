@@ -1,0 +1,62 @@
+#!/bin/bash
+# Script : ha-inet
+# Date : 05/12/2025
+# Version proxmox : 9.0
+# Description : Vérifie l'état d'une interface et passe en mode maintenance si nécessaire
+
+
+
+IFACE="$1"
+. /etc/default/ha-inet
+
+NODE="$(hostname)"
+LOCK_FILE="/etc/pve/ha/ha-inet.lock"
+
+# Pas d'interface passée en paramètre
+if [ -z "$IFACE" ]; then
+    echo "HA-INET: ERREUR - aucune interface passée en paramètre"
+    exit 1
+fi
+
+# Vérification de l'interface
+EXIST=$(ip link | grep "$IFACE " | wc -l)
+if [ $EXIST -eq 0 ]; then
+    echo "HA-INET: ERREUR - aucune interface $IFACE !"
+    exit 1
+fi
+
+UP=$(ip link | grep $IFACE | grep "state UP" | wc -l)	# Récupération des UPs de l'interface
+
+
+# Interface down
+if [ $UP -eq 0 ]; then
+    if [ ! -f "$LOCK_FILE" ]; then
+	DOWN=$(ha-manager status | grep -E "maintenance|dead" | wc -l)
+	if [ $DOWN -eq 0 ]; then
+	        echo "$NODE" > "$LOCK_FILE"
+	        echo "HA-INET: $NODE prend le lock global (iface $IFACE) et passe en maintenance"
+	        ha-manager crm-command node-maintenance enable "$NODE"
+	else
+		echo "HA-INET: Maintenance en cours ou autre noeud inactif - $NODE reste actif"
+	fi
+    else
+	LOCK_NODE=$(cat "$LOCK_FILE")
+	if [ "$LOCK_NODE" != "$NODE" ]; then
+        	echo "HA-INET: Lock déjà pris par $LOCK_NODE – $NODE reste actif"
+	fi
+    fi
+
+# Interface up
+else
+    if [ -f "$LOCK_FILE" ]; then
+        LOCK_NODE=$(cat "$LOCK_FILE")
+
+        if [ "$LOCK_NODE" = "$NODE" ]; then
+            echo "HA-INET: $NODE libère le lock (iface $IFACE) et sort de maintenance"
+            rm -f "$LOCK_FILE"
+            ha-manager crm-command node-maintenance disable "$NODE"
+        fi
+    fi
+fi
+
+exit 0

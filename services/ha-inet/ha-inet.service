@@ -1,0 +1,13 @@
+[Unit]
+Description=Proxmox inet interface Monitor
+After=network.target pve-ha-lrm.service
+Wants=pve-ha-lrm.service
+
+[Service]
+Type=simple
+ExecStart=/sbin/ha-inet
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

@@ -25,6 +25,20 @@ Par défaut ce script se base sur le nom des pools commençant par "removed-".
 Vous pouvez modifier la variable "RMPREFIX" du script pour modifier le préfixe des pools à supprimer.
 
 
+## Services
+
+### ha-inet
+Ce service permet de surveiller une interface réseau et de passer un noeud en mode maintenance si l'interface devient down.
+
+Mise en place du service :
+- Copiez le fichier ha-inet.default dans /etc/default/ha-inet et définissez l'interface à surveiller dans le paramètre IFACE.
+- Copiez le fichier ha-inet dans /sbin/ha-inet et rendez le fichier exécutable avec `chmox +x /sbin/ha-inet`
+- Copiez le fichier ha-inet.service dans /etc/systemd/system/ha-inet.service
+- Rechargez les services avec `systemctl daemon-reload`
+- Activez le service au démarrage avec `systemctl enable ha-inet`
+- Lancez le service avec `systemctl start ha-inet`
+
+
 ## Fichiers
 
 ### Fichier "Gestion VMs.ods"
