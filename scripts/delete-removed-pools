@@ -12,7 +12,7 @@
 RMPREFIX="removed-"           # Préfixe des pool supprimés
 
 
-echo "[$(date)] Suppression des pools étudiants obsolètes"
+echo "[$(date)] Suppression des pools obsolètes"
 
 
 for POOL in $(pveum pool list --noborder | awk '{print $1}' | grep "$RMPREFIX"); do

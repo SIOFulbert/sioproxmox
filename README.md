@@ -31,7 +31,7 @@ Vous pouvez modifier les variables du script pour changer son comportement :
 - RMPREFIX : Préfixe à appliquer sur les anciens pools (defaut "removed-")
 
 
-### delete-etudiants-pool
+### delete-removed-pool
 Ce script permet de supprimer les pools marqué comme supprimés ainsi que les VMs associés.
 
 Par défaut ce script se base sur le nom des pools commençant par "removed-".
