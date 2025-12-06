@@ -1,5 +1,5 @@
 #!/bin/bash
-# Script : sync-etudiant-pools
+# Script : sync-personal-pools
 # Date : 06/12/2025
 # Version proxmox : 9.0
 # Description :
