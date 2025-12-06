@@ -5,8 +5,8 @@ Ce dépôt contient certains scripts et fichiers utiles pour l'administration de
 
 ## Scripts
 
-### sync-etudiants-pool
-Ce script permet la création de pools personnels pour les nouveaux étudiants membres du groupe proxmox dédié aux étudiant. Il marque également les pools des membres qui n'existent plus dans le groupe comme supprimés.
+### sync-etudiants-pool [groupe]
+Ce script permet la création de pools personnels pour les nouveaux membres du groupe spécifié et commençant par « proxmox- » (le préfixe « proxmox- » n'est pas à spécifier dans le pamrètre). Il marque également les pools des membres qui n'existent plus dans le groupe comme supprimés.
 
 Par défaut le script crée des pools commençant par « etudiant- » et se base sur le groupe « proxmox-etudiant ». Il renomme les pools étudiants obsolètes avec le préfixe "removed-".
 Vous pouvez modifier les variables du script pour changer son comportement :
