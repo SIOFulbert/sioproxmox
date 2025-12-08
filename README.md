@@ -5,7 +5,12 @@ Ce dépôt contient certains scripts et fichiers utiles pour l'administration de
 
 ## Scripts
 
-### sync-etudiants-pool [groupe]
+### cluster-maintenance enable|disable
+Ce script permet l'entrée en mode maintenance de tout les noeuds du cluster avec le paramètre "enable". Cela est utile pour permettre l'extinction totale du cluster.
+La sortie du mode maintenance de tous les noeuds est réalisé avec le paramètre "disable".
+
+
+### sync-personal-pool [groupe]
 Ce script permet la création de pools personnels pour les nouveaux membres du groupe spécifié et commençant par « proxmox- » (le préfixe « proxmox- » n'est pas à spécifier dans le pamrètre). Il marque également les pools des membres qui n'existent plus dans le groupe comme supprimés.
 
 Par défaut le script crée des pools commençant par « etudiant- » et se base sur le groupe « proxmox-etudiant ». Il renomme les pools étudiants obsolètes avec le préfixe "removed-".
@@ -52,6 +57,11 @@ Mise en place du service :
 - Activez le service au démarrage avec `systemctl enable ha-inet`
 - Lancez le service avec `systemctl start ha-inet`
 
+Il est possible de se passer du service et d'utiliser directement la commande pour lancer une vérification :
+
+`ha-inet [interface]`
+
+Si aucun paramètre n'est passé, c'est l'interface renseignée dans le fichier /etc/default qui sera prise en compte.
 
 ## Fichiers
 
