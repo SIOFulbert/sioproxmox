@@ -10,6 +10,10 @@ Ce script permet l'entrée en mode maintenance de tout les noeuds du cluster ave
 La sortie du mode maintenance de tous les noeuds est réalisé avec le paramètre "disable".
 
 
+### sync-iso IDSTOCKAGE
+Ce script permet d'envoyer les images ISO présentes dans le stockage IDSTOCKAGE vers les autres noeuds du cluster.
+
+
 ### sync-personal-pool [groupe]
 Ce script permet la création de pools personnels pour les nouveaux membres du groupe spécifié et commençant par « proxmox- » (le préfixe « proxmox- » n'est pas à spécifier dans le pamrètre). Il marque également les pools des membres qui n'existent plus dans le groupe comme supprimés.
 
